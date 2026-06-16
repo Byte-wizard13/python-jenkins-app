@@ -8,17 +8,25 @@ pipeline {
             }
         }
 
+        stage('Setup Virtual Environment') {
+            steps {
+                // १. मघाशी मिळालेला Windows App शॉर्टकट वापरून व्हर्च्युअल एन्व्हायरनमेंट तयार करणे
+                bat 'C:\\Users\\ADMIN\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe -m venv venv'
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
-                // तुमच्या सिस्टीममधील युझर प्रोफाईलचा वापर करून थेट Python रन करणे
-                bat 'cmd /c "FOR /F "tokens=*" %i IN (\'where python\') DO @"%i" -m pip install --upgrade pip"'
-                bat 'cmd /c "FOR /F "tokens=*" %i IN (\'where python\') DO @"%i" -m pip install -r requirements.txt"'
+                // २. तयार झालेल्या लोकल venv मधील pip वापरून डिपेंडन्सी इन्स्टॉल करणे
+                bat 'venv\\Scripts\\pip install --upgrade pip'
+                bat 'venv\\Scripts\\pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'cmd /c "FOR /F "tokens=*" %i IN (\'where python\') DO @"%i" -m pytest"'
+                // ३. लोकल venv मधील pytest वापरून टेस्ट रन करणे
+                bat 'venv\\Scripts\\pytest'
             }
         }
     }
