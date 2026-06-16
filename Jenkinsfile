@@ -10,14 +10,15 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                // साधं आणि सोपं कोड
-                bat 'pip install -r requirements.txt'
+                // 'py -m' विंडोजवर आपोआप योग्य पाथ शोधून काढते
+                bat 'py -m pip install --upgrade pip'
+                bat 'py -m pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'pytest'
+                bat 'py -m pytest'
             }
         }
     }
