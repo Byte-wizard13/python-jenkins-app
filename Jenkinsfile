@@ -10,15 +10,16 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                // Windows साठी bat कमांडचा वापर
-                bat 'pip install -r requirements.txt'
+                // 'python -m pip' वापरल्याने पाथची समस्या सुटते
+                bat 'python -m pip install --upgrade pip'
+                bat 'python -m pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                // Windows साठी bat कमांडचा वापर
-                bat 'pytest'
+                // pytest थेट रन न करता python द्वारे रन करणे
+                bat 'python -m pytest'
             }
         }
     }
