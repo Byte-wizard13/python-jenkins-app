@@ -10,14 +10,14 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                // अगदी सोप्या कमांड्स
                 bat 'pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'pytest'
+                // थेट pytest ऐवजी python च्या मॉड्यूल थ्रू रन करणे (विंडोजसाठी सर्वोत्तम)
+                bat 'python -m pytest'
             }
         }
     }
